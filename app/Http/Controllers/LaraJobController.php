@@ -12,7 +12,7 @@ class LaraJobController extends Controller
     public function index()
     {
 
-        return view('posts.index', ['larajobs' => laraJob::latest()->filter(request(['search','tag']))->get(),]);
+        return view('posts.index', ['larajobs' => laraJob::latest()->filter(request(['search', 'tag']))->get(),]);
     }
 
     //show single post in show view
@@ -33,16 +33,16 @@ class LaraJobController extends Controller
         //validating received data
         $formFields = $request->validate([
             'title' => 'required',
-            'company' => ['required',Rule::Unique('lara_jobs','company')],
+            'company' => ['required', Rule::Unique('lara_jobs', 'company')],
             'location' => 'required',
             'website' => 'required',
-            'email' => ['required','email'],
+            'email' => ['required', 'email'],
             'tags' => 'required',
-            'description' =>'required'
+            'description' => 'required'
         ]);
 
         laraJob::create($formFields);
 
-        return redirect('/')->with('message','New Job Added Successfully!');
+        return redirect('/')->with('message', 'New Job Added Successfully!');
     }
 }
