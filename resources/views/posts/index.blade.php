@@ -5,7 +5,7 @@
         @unless (count($larajobs) == 0)
 
             @foreach ($larajobs as $larajob)
-            <x-larajob-card :larajob="$larajob" />
+                <x-larajob-card :larajob="$larajob" />
             @endforeach
         @else
             <p>No listings found</p>
