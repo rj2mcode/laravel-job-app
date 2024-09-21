@@ -43,6 +43,6 @@ class LaraJobController extends Controller
 
         laraJob::create($formFields);
 
-        return redirect('/');
+        return redirect('/')->with('message','New Job Added Successfully!');
     }
 }
