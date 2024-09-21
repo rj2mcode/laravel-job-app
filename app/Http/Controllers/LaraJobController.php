@@ -12,7 +12,7 @@ class LaraJobController extends Controller
     public function index()
     {
 
-        return view('posts.index', ['larajobs' => laraJob::latest()->filter(request(['search', 'tag']))->get(),]);
+        return view('posts.index', ['larajobs' => laraJob::latest()->filter(request(['search', 'tag']))->SimplePaginate(4),]);
     }
 
     //show single post in show view
