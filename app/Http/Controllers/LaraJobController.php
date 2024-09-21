@@ -10,7 +10,7 @@ class LaraJobController extends Controller
     public function index()
     {
         //show all posts in index page
-        return view('posts.index', ['larajobs' => laraJob::latest()->get(),]);
+        return view('posts.index', ['larajobs' => laraJob::latest()->filter(request(['search']))->get(),]);
     }
 
     public function show(laraJob $larajob)
