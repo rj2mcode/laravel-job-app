@@ -50,4 +50,34 @@ class LaraJobController extends Controller
 
         return redirect('/')->with('message', 'New Job Added Successfully!');
     }
+
+    //show edit job view
+    public function edit(laraJob $larajob)
+    {
+        return view('posts.edit',['larajob' => $larajob]);
+    }
+
+    //store new job
+    public function update(Request $request, laraJob $larajob)
+    {
+        //validating received data
+        $formFields = $request->validate([
+            'title' => 'required',
+            'company' => ['required'],
+            'location' => 'required',
+            'website' => 'required',
+            'email' => ['required', 'email'],
+            'tags' => 'required',
+            'description' => 'required'
+        ]);
+
+        if($request->hasFile('logo')){
+            //dd($request->file('logo'));
+            $formFields['logo'] = $request->file('logo')->store('logos','public');
+        }
+
+        $larajob->update($formFields);
+
+        return back()->with('message', 'Job Updated Successfully!');
+    }
 }
