@@ -41,6 +41,11 @@ class LaraJobController extends Controller
             'description' => 'required'
         ]);
 
+        if($request->hasFile('logo')){
+            //dd($request->file('logo'));
+            $formFields['logo'] = $request->file('logo')->store('logos','public');
+        }
+
         laraJob::create($formFields);
 
         return redirect('/')->with('message', 'New Job Added Successfully!');

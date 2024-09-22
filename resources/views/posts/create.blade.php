@@ -8,7 +8,7 @@
                 <p class="mb-4">Post a job to find a developer</p>
             </header>
 
-            <form method="POST" action="/larajobs">
+            <form method="POST" action="/larajobs" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-6">
                     <label for="company" class="inline-block text-lg mb-2">Company Name</label>
@@ -68,7 +68,7 @@
                     @enderror
                 </div>
 
-                {{-- <div class="mb-6">
+                <div class="mb-6">
                     <label for="logo" class="inline-block text-lg mb-2">
                         Company Logo
                     </label>
@@ -77,7 +77,10 @@
                         class="border border-gray-200 rounded p-2 w-full"
                         name="logo"
                     />
-                </div> --}}
+                    @error('logo')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
 
                 <div class="mb-6">
                     <label for="description" class="inline-block text-lg mb-2">
