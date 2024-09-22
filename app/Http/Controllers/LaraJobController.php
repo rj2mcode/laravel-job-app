@@ -80,4 +80,10 @@ class LaraJobController extends Controller
 
         return back()->with('message', 'Job Updated Successfully!');
     }
+
+    public function destroy(laraJob $larajob)
+    {
+        $larajob->delete();
+        return redirect('/')->with('message', 'The Job Deleted Successfully!');
+    }
 }

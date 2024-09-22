@@ -18,5 +18,8 @@ Route::get('/larajobs/{larajob}/edit', [LaraJobController::class,'edit']);
 //edit single job by filter by id
 Route::put('/larajobs/{larajob}', [LaraJobController::class,'update']);
 
+//delete single job by filter by id
+Route::delete('/larajobs/{larajob}', [LaraJobController::class,'destroy']);
+
 //show single job by filter by id
 Route::get('/larajobs/{larajob}', [LaraJobController::class,'show']);
