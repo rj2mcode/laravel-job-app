@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\laraJob;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class LaraJobController extends Controller
@@ -11,7 +12,6 @@ class LaraJobController extends Controller
     //show all posts in index view
     public function index()
     {
-
         return view('posts.index', ['larajobs' => laraJob::latest()->filter(request(['search', 'tag']))->SimplePaginate(4),]);
     }
 
@@ -41,9 +41,11 @@ class LaraJobController extends Controller
             'description' => 'required'
         ]);
 
-        if($request->hasFile('logo')){
+        $formFields['user_id'] = Auth::id();
+
+        if ($request->hasFile('logo')) {
             //dd($request->file('logo'));
-            $formFields['logo'] = $request->file('logo')->store('logos','public');
+            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
         }
 
         laraJob::create($formFields);
@@ -54,12 +56,17 @@ class LaraJobController extends Controller
     //show edit job view
     public function edit(laraJob $larajob)
     {
-        return view('posts.edit',['larajob' => $larajob]);
+        return view('posts.edit', ['larajob' => $larajob]);
     }
 
     //store new job
     public function update(Request $request, laraJob $larajob)
     {
+        //make sure this user is owner
+        if ($larajob->user_id != Auth::User()->id) {
+            Abort(403, 'Unauthorized Action');
+        }
+
         //validating received data
         $formFields = $request->validate([
             'title' => 'required',
@@ -71,9 +78,9 @@ class LaraJobController extends Controller
             'description' => 'required'
         ]);
 
-        if($request->hasFile('logo')){
+        if ($request->hasFile('logo')) {
             //dd($request->file('logo'));
-            $formFields['logo'] = $request->file('logo')->store('logos','public');
+            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
         }
 
         $larajob->update($formFields);
@@ -83,7 +90,16 @@ class LaraJobController extends Controller
 
     public function destroy(laraJob $larajob)
     {
+        //make sure this user is owner
+        if ($larajob->user_id != Auth::User()->id) {
+            Abort(403, 'Unauthorized Action');
+        }
         $larajob->delete();
         return redirect('/')->with('message', 'The Job Deleted Successfully!');
+    }
+
+    public function management()
+    {
+        return view('posts.management', ['larajobs' => Auth::user()->laraJobs]);
     }
 }

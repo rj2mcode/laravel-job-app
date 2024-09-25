@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class laraJob extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'company', 'location', 'website', 'email', 'tags', 'description','logo'];
+    protected $fillable = ['title', 'company', 'location', 'website', 'email', 'tags', 'description','logo','user_id'];
 
     public function scopeFilter($query, array $filters)
     {
@@ -21,5 +21,9 @@ class laraJob extends Model
         if ($filters['search'] ?? false) {
             $query->where('title', 'like', '%' . request('search') . '%')->orWhere('description', 'like', '%' . request('search') . '%')->orWhere('tags', 'like', '%' . request('search') . '%');
         }
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }
