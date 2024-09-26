@@ -6,7 +6,7 @@
 
 
 <p>Screenshot</p>
-<img src="https://github.com/rj2mcode/laravel-job-app/blob/main/screenshot.png" width="400" alt="Screenshot">
+<img src="https://github.com/rj2mcode/laravel-job-app/blob/main/screenshot.png" width="800" alt="Screenshot">
 
 
 <p align="center">
